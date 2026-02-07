@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas Operacionais: Guia para Iniciantes</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #475569;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --success: #16a34a;
+            --error: #dc2626;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 3rem 0 2rem;
+            font-size: 2rem;
+            color: var(--primary-dark);
+            border-bottom: 3px solid var(--primary);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            border-top: 5px solid var(--primary);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card ul {
+            list-style-position: inside;
+            margin-top: 1rem;
+            color: var(--secondary);
+        }
+
+        .card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .tag-desktop { background-color: #e0e7ff; color: #3730a3; }
+        .tag-mobile { background-color: #dcfce7; color: #166534; }
+        .tag-server { background-color: #ffedd5; color: #9a3412; }
+
+        /* Quiz Styles */
+        #quiz-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-top: 4rem;
+        }
+
+        .question-block {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .options label {
+            display: block;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: #f1f5f9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .options label:hover {
+            background: #e2e8f0;
+        }
+
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .correct { color: var(--success); background-color: #dcfce7; }
+        .incorrect { color: var(--error); background-color: #fee2e2; }
+
+        #score-display {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            #quiz-section { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Guia de Sistemas Operacionais</h1>
+        <p>Entenda o coração do seu computador e celular em minutos</p>
+    </header>
+
+    <div class="container">
+        
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h2 class="section-title">O que é um Sistema Operacional?</h2>
+            <p>Imagine o Sistema Operacional (SO) como o gerente de uma empresa. Ele comanda o hardware (memória, processador, tela) e garante que os softwares (programas e apps) funcionem corretamente. Sem ele, seu dispositivo seria apenas um peso de papel caro.</p>
+        </div>
+
+        <h2 class="section-title">Computadores Pessoais (Desktop)</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="tag tag-desktop">Desktop</span>
+                <h3>Windows</h3>
+                <p>O sistema mais popular do mundo, criado pela Microsoft em 1985.</p>
+                <ul>
+                    <li><strong>Prós:</strong> Compatível com quase tudo, excelente para jogos, fácil de usar.</li>
+                    <li><strong>Contras:</strong> Pesado para máquinas antigas, atualizações invasivas, alvo frequente de vírus.</li>
+                    <li><strong>Ideal para:</strong> Jogadores, escritórios e uso geral.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <span class="tag tag-desktop">Desktop</span>
+                <h3>macOS</h3>
+                <p>Exclusivo dos computadores da Apple, focado em estabilidade e design.</p>
+                <ul>
+                    <li><strong>Prós:</strong> Muito estável, integração perfeita com iPhone, ótimo para criativos.</li>
+                    <li><strong>Contras:</strong> Exige hardware caro (Macs), ruim para jogos (sem DirectX).</li>
+                    <li><strong>Ideal para:</strong> Designers, editores de vídeo e fãs da Apple.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <span class="tag tag-desktop">Desktop / Server</span>
+                <h3>Linux</h3>
+                <p>Uma família de sistemas de código aberto, livre e extremamente potente.</p>
+                <ul>
+                    <li><strong>Prós:</strong> Gratuito, seguro, roda em qualquer coisa (de torradeiras a supercomputadores da NASA).</li>
+                    <li><strong>Contras:</strong> Curva de aprendizado maior (terminal), compatibilidade de software limitada.</li>
+                    <li><strong>Ideal para:</strong> Programadores, servidores e hackers éticos.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <span class="tag tag-desktop">Desktop</span>
+                <h3>Chrome OS</h3>
+                <p>Sistema da Google baseado na nuvem, focado em web.</p>
+                <ul>
+                    <li><strong>Prós:</strong> Leve, rápido, seguro, bateria duradoura.</li>
+                    <li><strong>Contras:</strong> Depende muito da internet, limitado para softwares pesados (Adobe, etc).</li>
+                    <li><strong>Ideal para:</strong> Estudantes e navegação básica.</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title">Dispositivos Móveis</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="tag tag-mobile">Mobile</span>
+                <h3>Android</h3>
+                <p>O sistema móvel mais usado, desenvolvido pelo Google (Open Source).</p>
+                <ul>
+                    <li><strong>Prós:</strong> Altamente personalizável, milhões de apps, variedade de aparelhos e preços.</li>
+                    <li><strong>Contras:</strong> Fragmentação (atualizações demoram), menos otimizado que iOS.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <span class="tag tag-mobile">Mobile</span>
+                <h3>iOS</h3>
+                <p>Sistema exclusivo dos iPhones e iPads da Apple.</p>
+                <ul>
+                    <li><strong>Prós:</strong> Segurança robusta, apps de alta qualidade, atualizações garantidas por anos.</li>
+                    <li><strong>Contras:</strong> Sistema fechado (pouca personalização), dispositivos caros.</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title">Sistemas Especializados</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="tag tag-server">Servidor</span>
+                <h3>Unix</h3>
+                <p>O "pai" dos sistemas modernos, criado nos anos 60.</p>
+                <ul>
+                    <li><strong>Uso:</strong> Bancos, centros de pesquisa, meteorologia.</li>
+                    <li><strong>Detalhe:</strong> Extremamente caro e focado em estabilidade crítica.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <span class="tag tag-server">Especializado</span>
+                <h3>BSD</h3>
+                <p>Derivado do Unix, focado em performance e redes.</p>
+                <ul>
+                    <li><strong>Uso:</strong> Base do sistema do PS4/PS5 e servidores da Netflix.</li>
+                    <li><strong>Detalhe:</strong> Apreciado por especialistas em redes e performance.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SEÇÃO DO QUIZ -->
+        <div id="quiz-section">
+            <h2 style="text-align: center; color: var(--primary-dark); margin-bottom: 2rem;">Teste Seu Conhecimento</h2>
+            <form id="quiz-form">
+                <div id="questions-container">
+                    <!-- Perguntas serão injetadas via JavaScript -->
+                </div>
+                <button type="button" id="submit-btn" class="btn" onclick="calculateScore()">Calcular Nota</button>
+            </form>
+            <div id="score-display"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // Banco de Dados de Perguntas (Simulando SQL)
+        const questionBank = [
+            { id: 1, text: "Qual sistema operacional é conhecido por ser a base do PlayStation 4 e 5?", options: ["Windows", "Linux", "BSD", "macOS"], correct: 2 },
+            { id: 2, text: "Qual SO é amplamente utilizado pela NASA e em servidores web?", options: ["Windows 11", "Linux", "Android", "iOS"], correct: 1 },
+            { id: 3, text: "O Windows foi lançado originalmente em que ano?", options: ["1995", "1985", "2001", "1990"], correct: 1 },
+            { id: 4, text: "Qual a principal desvantagem citada sobre o Chrome OS?", options: ["Custo alto", "Muitos vírus", "Dependência da internet", "Difícil de usar"], correct: 2 },
+            { id: 5, text: "Qual sistema é exclusivo para hardware da Apple?", options: ["Windows", "Android", "Unix", "macOS"], correct: 3 },
+            { id: 6, text: "O que significa o termo 'Open Source' associado ao Linux e Android?", options: ["Código pago", "Código fechado", "Código aberto", "Apenas para servidores"], correct: 2 },
+            { id: 7, text: "Qual sistema operacional móvel permite maior personalização visual nativa?", options: ["iOS", "Android", "Windows Phone", "BlackBerry OS"], correct: 1 },
+            { id: 8, text: "O Unix é frequentemente utilizado em que tipo de ambiente?", options: ["Jogos domésticos", "Design Gráfico", "Bancos e Centros de Pesquisa", "Smartphones"], correct: 2 },
+            { id: 9, text: "Qual é uma crítica comum às atualizações do Windows?", options: ["São muito raras", "São pagas", "Podem ser invasivas e causar loops", "Não adicionam recursos"], correct: 2 },
+            { id: 10, text: "O macOS não é recomendado para qual atividade específica?", options: ["Edição de Vídeo", "Design Gráfico", "Jogos (Gaming)", "Programação Web"], correct: 2 },
+            { id: 11, text: "Quem criou o kernel do Linux?", options: ["Bill Gates", "Steve Jobs", "Linus Torvalds", "Mark Zuckerberg"], correct: 2 },
+            { id: 12, text: "Qual sistema operacional é baseado inteiramente na nuvem?", options: ["Windows 10", "Chrome OS", "Ubuntu", "macOS"], correct: 1 },
+            { id: 13, text: "Qual destes sistemas NÃO é voltado para o consumidor comum?", options: ["Windows", "Android", "Unix", "iOS"], correct: 2 },
+            { id: 14, text: "O que é a 'Tela Azul da Morte'?", options: ["Um erro crítico do Windows", "Um recurso de segurança do Mac", "O logo do Linux", "Um aplicativo do Android"], correct: 0 },
+            { id: 15, text: "Qual sistema operacional móvel é conhecido por ser um 'Jardim Murado' (fechado)?", options: ["Android", "Symbian", "iOS", "HarmonyOS"], correct: 2 },
+            { id: 16, text: "A Netflix utiliza qual sistema para sua distribuição de conteúdo?", options: ["Windows Server", "BSD", "macOS Server", "Solaris"], correct: 1 },
+            { id: 17, text: "Qual sistema operacional requer licenças caras que podem custar milhares de reais?", options: ["Linux", "Android", "Unix", "Chrome OS"], correct: 2 },
+            { id: 18, text: "O Android é desenvolvido por qual empresa?", options: ["Samsung", "Apple", "Google", "Microsoft"], correct: 2 },
+            { id: 19, text: "O macOS é preferido por qual grupo de profissionais?", options: ["Gamers", "Criativos (Designers/Editores)", "Administradores de Redes", "Usuários casuais"], correct: 1 },
+            { id: 20, text: "Qual sistema operacional utiliza 'distros' (distribuições)?", options: ["Windows", "macOS", "Linux", "iOS"], correct: 2 }
+        ];
+
+        // Lógica de Embaralhamento e Seleção (Regra dos 40%)
+        function getQuizQuestions() {
+            // Recupera IDs da última sessão
+            const lastSessionIds = JSON.parse(localStorage.getItem('lastQuizIds') || '[]');
+            
+            // Separa perguntas em "Novas" (não vistas na última vez) e "Velhas"
+            const newPool = questionBank.filter(q => !lastSessionIds.includes(q.id));
+            const oldPool = questionBank.filter(q => lastSessionIds.includes(q.id));
+            
+            // Embaralha ambos os pools
+            shuffleArray(newPool);
+            shuffleArray(oldPool);
+            
+            let selectedQuestions = [];
+            
+            // Regra: Pelo menos 40% (4 questões) devem ser novas
+            // Se houver novas suficientes, pega 4. Se não, pega o que der.
+            const forcedNewCount = Math.min(4, newPool.length);
+            
+            selectedQuestions = selectedQuestions.concat(newPool.slice(0, forcedNewCount));
+            
+            // Preenche o resto (6 questões) misturando o que sobrou das novas e as velhas
+            const remainingPool = [...newPool.slice(forcedNewCount), ...oldPool];
+            shuffleArray(remainingPool);
+            
+            // Completa até 10
+            const needed = 10 - selectedQuestions.length;
+            selectedQuestions = selectedQuestions.concat(remainingPool.slice(0, needed));
+            
+            // Embaralha o resultado final para misturar novas e velhas na tela
+            shuffleArray(selectedQuestions);
+            
+            // Salva os IDs atuais para a próxima vez
+            localStorage.setItem('lastQuizIds', JSON.stringify(selectedQuestions.map(q => q.id)));
+            
+            return selectedQuestions;
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Renderização
+        const questionsContainer = document.getElementById('questions-container');
+        const currentQuestions = getQuizQuestions();
+
+        currentQuestions.forEach((q, index) => {
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <label>
+                        <input type="radio" name="q${q.id}" value="${optIndex}">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            block.innerHTML = `
+                <div class="question-text">${index + 1}. ${q.text}</div>
+                <div class="options">${optionsHTML}</div>
+                <div id="feedback-${q.id}" class="feedback" style="display:none;"></div>
+            `;
+            questionsContainer.appendChild(block);
+        });
+
+        function calculateScore() {
+            let score = 0;
+            const btn = document.getElementById('submit-btn');
+            
+            // Desativa botão (Regra de Interface)
+            btn.disabled = true;
+            btn.innerText = "Nota Calculada";
+
+            currentQuestions.forEach(q => {
+                const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback-${q.id}`);
+                feedbackDiv.style.display = 'block';
+
+                if (selected && parseInt(selected.value) === q.correct) {
+                    score++;
+                    feedbackDiv.innerText = "Correto!";
+                    feedbackDiv.className = "feedback correct";
+                } else {
+                    const correctText = q.options[q.correct];
+                    feedbackDiv.innerText = `Incorreto. A resposta certa é: ${correctText}`;
+                    feedbackDiv.className = "feedback incorrect";
+                }
+            });
+
+            const display = document.getElementById('score-display');
+            display.innerText = `Sua nota: ${score} / 10`;
+            
+            if(score >= 7) {
+                display.style.color = "var(--success)";
+                display.innerHTML += "<br><small>Parabéns! Você domina o assunto.</small>";
+            } else {
+                display.style.color = "var(--error)";
+                display.innerHTML += "<br><small>Continue estudando e tente novamente (atualize a página).</small>";
+            }
+        }
+    </script>
+</body>
+</html>
